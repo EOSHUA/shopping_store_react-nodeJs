@@ -1,9 +1,9 @@
-import {React, useContext} from "react";
+import {React, useContext, useEffect, useState} from "react";
 import Items from "./Items";
-import data from "../data";
 import "../style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CardContext } from "./Layout";
+import axios from 'axios';
 import {
   Container,
   Row,
@@ -14,10 +14,25 @@ import {
   Card,
   Form,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 export default function ItemLists() {
 
+
  const { cartItem, setCartItem } = useContext(CardContext);
+ let [data, setData]=useState([])
+ const {cat}=useParams();
+
+
+  async function getData(){
+  const data1= await axios.get(`https://jbh-mockserver.onrender.com/categories/${cat}`)
+  .then(({data})=>setData(data))
+ }
+
+
+ useEffect(()=>{
+getData();
+ },[])
 
   return (
     <>
@@ -64,7 +79,7 @@ export default function ItemLists() {
 
 
         <div className="itemList">
-          {data.fruits.map((fruit, index) => (
+          {data.map((fruit) => (
             <Items item={fruit} key={fruit.id}  />
           ))}
         </div>

@@ -78,7 +78,7 @@ const deleteCartItem =() => {
     <div className='itemInCart'>
        <div className='itemText'>
           <h2 >{item.name}</h2>
-          <h4>{item.price}</h4>
+          <h4>{(item.price*item.amount).toFixed(2)}</h4>
           <h2>{item.emoji}</h2> 
       </div>
       <span className='amountInCart'>{item.amount}</span> 
